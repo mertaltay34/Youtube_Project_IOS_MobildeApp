@@ -56,7 +56,7 @@ class VideoViewCell: UITableViewCell {
         textView.textColor = .lightGray
         return textView
     }()
-    
+
     
     func setImageView() {
         
@@ -64,8 +64,8 @@ class VideoViewCell: UITableViewCell {
             make.top.equalToSuperview().offset(16)
             make.leading.equalToSuperview().offset(16)
             make.trailing.equalToSuperview().offset(-16)
-            //make.bottom.equalToSuperview().offset((frame.height/12)-20) alttan ayarlamaya çalışıyorum
-            make.height.equalToSuperview().offset((frame.height/4)-100)
+            //make.bottom.equalToSuperview().offset(16)
+            make.height.equalToSuperview().offset((frame.height/4)-115)
             
         }
         
@@ -77,6 +77,7 @@ class VideoViewCell: UITableViewCell {
             make.leading.equalTo(thumbnailImageView.snp.leading)
             make.height.width.equalTo(44)
             
+            
         }
     }
     
@@ -86,7 +87,7 @@ class VideoViewCell: UITableViewCell {
             make.top.equalTo(userProfileImageView.snp.top)
             make.leading.equalTo(userProfileImageView.snp.trailing).offset(8)
             make.trailing.equalTo(thumbnailImageView.snp.trailing)
-            make.height.equalTo(20)
+            make.height.equalTo(44)
         }
     }
     
@@ -99,6 +100,7 @@ class VideoViewCell: UITableViewCell {
             make.height.equalTo(30)
         }
     }
+
 
     func setupView(){
         //addSubview
@@ -113,6 +115,7 @@ class VideoViewCell: UITableViewCell {
         
         addSubview(subTitleTextView)
         setSubTitleTextView()
+
     }
     
     //MARK: DATALARI EŞİTLİYORUZ
@@ -130,13 +133,22 @@ class VideoViewCell: UITableViewCell {
         }
         
         // set the title and date label
+        //TODO: If I find the number of title lines, I can get a smoother view.
         
         self.titleLabel.text = video?.title
         
+        //measure title text
         
+      /*  if let title = video?.title{
+            let size = CGSizeMake(frame.width - 16 - 44 - 8 - 16, 1000)
+            let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+            let estimatedRect = NSString(string: title).boundingRect(with: size, options: options, attributes: [: UIFont.systemFont(ofSize: 14)], context: nil)
+        }
+            
+        */
           let df = DateFormatter() // df means date formatter
          df.dateFormat = "MM/dd/yyyy" // formats can be obtained from http://nsdateformatter.com
-         
+        
          self.subTitleTextView.text = df.string(from: video!.published)
         
         // set the thumbnail

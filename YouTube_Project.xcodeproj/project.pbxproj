@@ -16,13 +16,14 @@
 		84FA475B2976838F008B605D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FA475A2976838F008B605D /* Constants.swift */; };
 		84FA475D297683AC008B605D /* ConstantsTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FA475C297683AC008B605D /* ConstantsTemplate.swift */; };
 		84FA475F297683C6008B605D /* YouTubeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FA475E297683C6008B605D /* YouTubeService.swift */; };
-		84FA4761297683DF008B605D /* YouTubeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FA4760297683DF008B605D /* YouTubeModel.swift */; };
+		84FA4761297683DF008B605D /* VideoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FA4760297683DF008B605D /* VideoModel.swift */; };
 		84FA4763297683F0008B605D /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FA4762297683F0008B605D /* Model.swift */; };
 		84FA476529768401008B605D /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FA476429768401008B605D /* Response.swift */; };
 		84FA476729768423008B605D /* VideoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FA476629768423008B605D /* VideoViewCell.swift */; };
-		84FA476929768467008B605D /* NavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FA476829768467008B605D /* NavigationBarView.swift */; };
+		84FA476929768467008B605D /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FA476829768467008B605D /* MenuBarView.swift */; };
 		84FA476C29768497008B605D /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 84FA476B29768497008B605D /* SnapKit */; };
 		84FA476F297684C7008B605D /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 84FA476E297684C7008B605D /* Alamofire */; };
+		84FA47722976C741008B605D /* MenuBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FA47712976C741008B605D /* MenuBarCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,11 +38,12 @@
 		84FA475A2976838F008B605D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		84FA475C297683AC008B605D /* ConstantsTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantsTemplate.swift; sourceTree = "<group>"; };
 		84FA475E297683C6008B605D /* YouTubeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeService.swift; sourceTree = "<group>"; };
-		84FA4760297683DF008B605D /* YouTubeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeModel.swift; sourceTree = "<group>"; };
+		84FA4760297683DF008B605D /* VideoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoModel.swift; sourceTree = "<group>"; };
 		84FA4762297683F0008B605D /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		84FA476429768401008B605D /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		84FA476629768423008B605D /* VideoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewCell.swift; sourceTree = "<group>"; };
-		84FA476829768467008B605D /* NavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarView.swift; sourceTree = "<group>"; };
+		84FA476829768467008B605D /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
+		84FA47712976C741008B605D /* MenuBarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +80,7 @@
 			children = (
 				84FA47592976837F008B605D /* ViewController */,
 				84FA475829768376008B605D /* TableViewCell */,
+				84FA47702976C716008B605D /* CollectionViewCell */,
 				84FA47572976836E008B605D /* ViewModel */,
 				84FA475629768369008B605D /* Model */,
 				84FA475529768360008B605D /* Service */,
@@ -112,7 +115,7 @@
 		84FA475629768369008B605D /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				84FA4760297683DF008B605D /* YouTubeModel.swift */,
+				84FA4760297683DF008B605D /* VideoModel.swift */,
 				84FA4762297683F0008B605D /* Model.swift */,
 				84FA476429768401008B605D /* Response.swift */,
 			);
@@ -138,9 +141,17 @@
 			isa = PBXGroup;
 			children = (
 				84FA474429768243008B605D /* ViewController.swift */,
-				84FA476829768467008B605D /* NavigationBarView.swift */,
+				84FA476829768467008B605D /* MenuBarView.swift */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		84FA47702976C716008B605D /* CollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				84FA47712976C741008B605D /* MenuBarCell.swift */,
+			);
+			path = CollectionViewCell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -224,13 +235,14 @@
 			files = (
 				84FA474529768243008B605D /* ViewController.swift in Sources */,
 				84FA474129768243008B605D /* AppDelegate.swift in Sources */,
-				84FA476929768467008B605D /* NavigationBarView.swift in Sources */,
+				84FA47722976C741008B605D /* MenuBarCell.swift in Sources */,
+				84FA476929768467008B605D /* MenuBarView.swift in Sources */,
 				84FA474329768243008B605D /* SceneDelegate.swift in Sources */,
 				84FA475F297683C6008B605D /* YouTubeService.swift in Sources */,
 				84FA476529768401008B605D /* Response.swift in Sources */,
 				84FA475B2976838F008B605D /* Constants.swift in Sources */,
 				84FA476729768423008B605D /* VideoViewCell.swift in Sources */,
-				84FA4761297683DF008B605D /* YouTubeModel.swift in Sources */,
+				84FA4761297683DF008B605D /* VideoModel.swift in Sources */,
 				84FA475D297683AC008B605D /* ConstantsTemplate.swift in Sources */,
 				84FA4763297683F0008B605D /* Model.swift in Sources */,
 			);

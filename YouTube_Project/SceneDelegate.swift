@@ -21,6 +21,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.makeKeyAndVisible()
         window.rootViewController = UINavigationController(rootViewController: ViewController())
         self.window = window
+        
+        // status bar renk değiştirme
+     /*   let statusBarBackgroundView = UIView()
+        statusBarBackgroundView.backgroundColor = UIColor(red: 194/255, green: 31/255, blue: 31/255, alpha: 1)
+        
+        window.addSubview(statusBarBackgroundView)
+        statusBarBackgroundView.snp.makeConstraints { make in
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.height.equalTo(40)
+        } */
+        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
