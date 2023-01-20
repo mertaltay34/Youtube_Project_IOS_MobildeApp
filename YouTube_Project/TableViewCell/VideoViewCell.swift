@@ -13,9 +13,9 @@ class VideoViewCell: UITableViewCell {
     static let identifier = "VideoViewCell"
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        //titleLabelHeight = 44
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupView()
-
     }
     
     required init?(coder: NSCoder) {
@@ -56,7 +56,6 @@ class VideoViewCell: UITableViewCell {
         textView.textColor = .lightGray
         return textView
     }()
-
     
     func setImageView() {
         
@@ -81,13 +80,14 @@ class VideoViewCell: UITableViewCell {
         }
     }
     
-    func setTitleLabel() {
-        
-        titleLabel.snp.makeConstraints { make in
+    var titleLabelHeight: Int?
+    
+    func setTitleLabel(_ height: Int = 44) {
+        titleLabel.snp.remakeConstraints { make in
             make.top.equalTo(userProfileImageView.snp.top)
             make.leading.equalTo(userProfileImageView.snp.trailing).offset(8)
             make.trailing.equalTo(thumbnailImageView.snp.trailing)
-            make.height.equalTo(44)
+            make.height.equalTo(height)
         }
     }
     
@@ -100,7 +100,6 @@ class VideoViewCell: UITableViewCell {
             make.height.equalTo(30)
         }
     }
-
 
     func setupView(){
         //addSubview
@@ -115,13 +114,17 @@ class VideoViewCell: UITableViewCell {
         
         addSubview(subTitleTextView)
         setSubTitleTextView()
-
     }
+    
     
     //MARK: DATALARI EŞİTLİYORUZ
     
     var video: VideoModel?
-
+    
+   override func prepareForReuse() {
+        video = nil
+    }
+    
 
     func setCell(_ v:VideoModel) {
         
@@ -138,22 +141,42 @@ class VideoViewCell: UITableViewCell {
         self.titleLabel.text = video?.title
         
         //measure title text
-        
-      /*  if let title = video?.title{
+    
+        /*if let title = video?.title{
+            
+          //  title.heightWithWidth(width: frame.width , font: .systemFont(ofSize: 14)) < 20 ? setTitleLabel(20) : setTitleLabel(44)
             let size = CGSizeMake(frame.width - 16 - 44 - 8 - 16, 1000)
             let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-            let estimatedRect = NSString(string: title).boundingRect(with: size, options: options, attributes: [: UIFont.systemFont(ofSize: 14)], context: nil)
-        }
+            let estimatedRect = NSString(string: title).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14) ], context: nil)
             
-        */
-          let df = DateFormatter() // df means date formatter
-         df.dateFormat = "MM/dd/yyyy" // formats can be obtained from http://nsdateformatter.com
+            if estimatedRect.size.height > 20 {
+                setTitleLabel(44)
+            }
+            else {
+                setTitleLabel(20)
+            }
+        } */
         
-         self.subTitleTextView.text = df.string(from: video!.published)
+          let df = DateFormatter() // df means date formatter
+         df.dateFormat = "MMMM yyyy" // formats can be obtained from http://nsdateformatter.com
+        
+        let publishedDate = df.string(from: video!.published)
+        
+        let channelName = self.video!.channelTitle
+        
+        let subtitleText = " \(channelName) • \(publishedDate)"
+        
+        self.subTitleTextView.text = subtitleText
         
         // set the thumbnail
         
         guard self.video!.thumbnail != "" else {
+            return
+        }
+        // check cache before downloading data. If there is no image in the cached data, this part is skipped and downloads over the network.
+        if let cachedData = CacheManager.getVideoCache(self.video!.thumbnail) {
+            
+            self.thumbnailImageView.image = UIImage(data: cachedData)
             return
         }
         
@@ -170,6 +193,9 @@ class VideoViewCell: UITableViewCell {
         let dataTask = session.dataTask(with: url!) { data, response, error in
             
             if error == nil && data != nil {
+                
+                // save the data in the cache
+                CacheManager.setVideoCache(url!.absoluteString, data)
                 
                 // check that the downloaded url matches the video thumbnail url that this cell is currently set to display
                 if url!.absoluteString != self.video?.thumbnail {

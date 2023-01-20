@@ -45,11 +45,13 @@ class ViewController: UIViewController {
         
         let moreButton = UIBarButtonItem(image: UIImage(named: "nav_more_icon")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleMore))
         navigationItem.rightBarButtonItems = [moreButton, searchBarButtonItem]
+    
         
     }
+    let settingsLauncher = SettingsLauncher()
     
     @objc func handleMore() {
-        
+        settingsLauncher.showSettings()
     }
     
     @objc func handleSearch() {

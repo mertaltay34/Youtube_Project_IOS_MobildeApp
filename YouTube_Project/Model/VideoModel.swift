@@ -17,6 +17,8 @@ struct VideoModel : Decodable {
     // TODO: small ve medium caseler alınacak thumbnail için
     var thumbnail = ""
     var published = Date()
+   // var channelId = ""
+    var channelTitle = ""
 
     
     // specify the set of keys
@@ -28,7 +30,8 @@ struct VideoModel : Decodable {
         case high
         case resourceId
         
-        
+      //  case channelId
+        case channelTitle
         case videoId
         case title
         case description
@@ -47,6 +50,10 @@ struct VideoModel : Decodable {
         self.description = try snippetContainer.decode(String.self, forKey: .description)
         // parse publish date
         self.published = try snippetContainer.decode(Date.self, forKey: .published)
+        
+        // parse channelTitle
+        
+        self.channelTitle = try snippetContainer.decode(String.self, forKey: .channelTitle)
         
         // parse thumbnails ; at that point, there are nested containers in the snippet container
         
