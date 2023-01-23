@@ -11,9 +11,8 @@ import SnapKit
 class SettingCell: UITableViewCell {
     
     override var isHighlighted: Bool {
-        didSet{
-            backgroundColor = isHighlighted ? .darkGray : .white
-            iconImageView.tintColor = isHighlighted ? UIColor.white : UIColor.black
+        didSet {
+            backgroundColor = isHighlighted ? .blue : .white
         }
     }
     

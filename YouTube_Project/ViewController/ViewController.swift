@@ -48,11 +48,26 @@ class ViewController: UIViewController {
     
         
     }
-    let settingsLauncher = SettingsLauncher()
-    
+    lazy var settingsLauncher : SettingsLauncher = {
+        var launcher = SettingsLauncher()
+        launcher.homeController = self
+        return launcher
+    }()
+     
     @objc func handleMore() {
         settingsLauncher.showSettings()
     }
+    
+    func showControllerForSetting(setting: Setting) {
+        let dummySettingViewController = UIViewController()
+        dummySettingViewController.navigationItem.title = setting.name
+        dummySettingViewController.view.backgroundColor = .white
+//        navigationController?.navigationBar.tintColor = .black
+//        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.blue]
+        navigationController?.pushViewController(dummySettingViewController, animated: true)
+    }
+    
+    
     
     @objc func handleSearch() {
         print(123)

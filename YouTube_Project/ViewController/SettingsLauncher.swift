@@ -33,6 +33,8 @@ class SettingsLauncher: NSObject {
         return [Setting(name: "Settings", imageName: "settings"),Setting(name: "Terms & privacy policy", imageName: "privacy"),Setting(name: "Send feedback", imageName: "feedback"),Setting(name: "Help", imageName: "help"),Setting(name: "Switch Account", imageName: "switch_account"),Setting(name: "Cancel", imageName: "cancel")]
     }()
     
+    var homeController: ViewController?
+    
     func showSettings() {
         
         // show menu
@@ -81,6 +83,8 @@ class SettingsLauncher: NSObject {
         tableView.delegate = self
     }
     
+    
+    
 }
 
 
@@ -98,7 +102,29 @@ extension SettingsLauncher: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 46
+        return cellHeight
+    }
+  
+   //TODO: seçildiğinde arka plan darkgray yazı white yap!
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //let selectedCell: UITableViewCell = tableView.cellForRow(at: indexPath)! 
+        
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut) {
+            self.blackView.alpha = 0
+            let scenes = UIApplication.shared.connectedScenes
+            let windowScene = scenes.first as? UIWindowScene
+            
+            if let window = windowScene?.windows.first {
+                self.tableView.frame = CGRectMake(0, window.frame.height, self.tableView.frame.width, self.tableView.frame.height)
+            }
+        } completion: { (completed: Bool) in
+            let setting = self.settings[indexPath.item]
+            if setting.name != "Cancel" {
+                self.homeController?.showControllerForSetting(setting: setting)
+            }
+            
+        }
     }
     
 }
+ 
