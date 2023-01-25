@@ -10,13 +10,22 @@ import UIKit
 // for settings pop
 
 class Setting {
-    let name: String
+    let name: SettingName
     let imageName: String
     
-    init(name: String, imageName: String) {
+    init(name: SettingName, imageName: String) {
         self.name = name
         self.imageName = imageName
     }
+}
+// The enum is used because if you want to change string of a piece of text at another time, the application will not crash
+enum SettingName: String {
+    case Cancel = "Cancel"
+    case Settings = "Settings"
+    case TermsPrivacy = "Terms & privacy"
+    case SendFeedback = "Send feedback"
+    case Help = "Help"
+    case SwitchAccount = "Switch Account"
 }
 
 class SettingsLauncher: NSObject {
@@ -28,9 +37,15 @@ class SettingsLauncher: NSObject {
         tableView.register(SettingCell.self, forCellReuseIdentifier: SettingCell.identifier)
         return tableView
     }()
-    let cellHeight: CGFloat = 50
     let settings: [Setting] = {
-        return [Setting(name: "Settings", imageName: "settings"),Setting(name: "Terms & privacy policy", imageName: "privacy"),Setting(name: "Send feedback", imageName: "feedback"),Setting(name: "Help", imageName: "help"),Setting(name: "Switch Account", imageName: "switch_account"),Setting(name: "Cancel", imageName: "cancel")]
+        let settingsSetting = Setting(name: .Settings, imageName: "settings")
+        let termsPrivacySetting = Setting(name: .TermsPrivacy, imageName: "privacy")
+        let feedbackSetting = Setting(name: .SendFeedback, imageName: "feedback")
+        let helpSetting = Setting(name: .Help, imageName: "help")
+        let switchAccountSetting = Setting(name: .SwitchAccount, imageName: "switch_account")
+        let cancelSetting = Setting(name: .Cancel, imageName: "cancel")
+        
+        return[settingsSetting,termsPrivacySetting,feedbackSetting,helpSetting,switchAccountSetting,cancelSetting]
     }()
     
     var homeController: ViewController?
@@ -82,11 +97,9 @@ class SettingsLauncher: NSObject {
         tableView.dataSource = self
         tableView.delegate = self
     }
-    
-    
-    
 }
 
+let cellHeight: CGFloat = 50
 
 extension SettingsLauncher: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -105,7 +118,7 @@ extension SettingsLauncher: UITableViewDelegate, UITableViewDataSource {
         return cellHeight
     }
   
-   //TODO: seçildiğinde arka plan darkgray yazı white yap!
+   //TODO: setting ayarlar menüsü seçildiğinde arka plan darkgray yazı white yap!
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //let selectedCell: UITableViewCell = tableView.cellForRow(at: indexPath)! 
         
@@ -119,10 +132,9 @@ extension SettingsLauncher: UITableViewDelegate, UITableViewDataSource {
             }
         } completion: { (completed: Bool) in
             let setting = self.settings[indexPath.item]
-            if setting.name != "Cancel" {
+            if setting.name != .Cancel{
                 self.homeController?.showControllerForSetting(setting: setting)
             }
-            
         }
     }
     

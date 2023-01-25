@@ -60,10 +60,10 @@ class ViewController: UIViewController {
     
     func showControllerForSetting(setting: Setting) {
         let dummySettingViewController = UIViewController()
-        dummySettingViewController.navigationItem.title = setting.name
+        dummySettingViewController.navigationItem.title = setting.name.rawValue
+//        dummySettingViewController.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.blue]
         dummySettingViewController.view.backgroundColor = .white
 //        navigationController?.navigationBar.tintColor = .black
-//        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.blue]
         navigationController?.pushViewController(dummySettingViewController, animated: true)
     }
     
@@ -80,16 +80,51 @@ class ViewController: UIViewController {
         return navbar
     }()
     
-     func setupMenuBar() {
+    func setupMenuBar() {
+//        navigationController?.hidesBarsOnSwipe = true
         view.addSubview(menuBar)
-         
-        menuBar.snp.makeConstraints { make in
+        menuBar.snp.remakeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
             make.height.equalTo(50)
         }
-    }
+    } 
+    
+
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+
+       if(velocity.y>0) {
+           UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+               self.navigationController?.setNavigationBarHidden(true, animated: true)
+               self.navigationController?.setToolbarHidden(true, animated: true)
+               self.view.addSubview(self.menuBar)
+               self.menuBar.snp.remakeConstraints { make in
+                   make.top.equalTo(self.view.safeAreaLayoutGuide)
+                   make.leading.equalToSuperview()
+                   make.trailing.equalToSuperview()
+//                   make.height.equalTo(50)
+               }
+               print("Hide")
+           }, completion: nil)
+
+       } else {
+           UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+               self.navigationController?.setNavigationBarHidden(false, animated: true)
+               self.navigationController?.setToolbarHidden(false, animated: true)
+               self.view.addSubview(self.menuBar)
+               self.menuBar.snp.remakeConstraints { make in
+                   make.top.equalTo(self.view.safeAreaLayoutGuide)
+                   make.leading.equalToSuperview()
+                   make.trailing.equalToSuperview()
+                   make.height.equalTo(50)
+               }
+               print("Unhide")
+           }, completion: nil)
+         }
+      }
+
     
     //set the color of the status bar
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -113,12 +148,17 @@ class ViewController: UIViewController {
         // navigation bar ile top safe area arasındaki kalan çizgiyi yok etme
 //        UINavigationBar.appearance().shadowImage = UIImage()
 //        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
-
+        
         let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width-32, height: view.frame.height))
         titleLabel.text = "Home"
         titleLabel.textColor = .white
         titleLabel.font = UIFont.systemFont(ofSize: 20)
         navigationItem.titleView = titleLabel
+        
+       /* let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: view.frame.width-32, height: view.frame.height))
+        imageView.image = UIImage(named: "logo")
+        navigationItem.titleView = imageView
+        */
     }
     
     func setDelegates() {

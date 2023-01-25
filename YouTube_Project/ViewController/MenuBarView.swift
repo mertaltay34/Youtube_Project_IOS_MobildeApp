@@ -32,11 +32,29 @@ class MenuBar: UIView, UICollectionViewDataSource,UICollectionViewDelegate, UICo
         collectionView.snp.makeConstraints { make in
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
-            make.height.equalToSuperview()
+            make.top.equalToSuperview()
+            make.bottom.equalToSuperview()
         }
         // home page den başlamasını sağlayacak.
         let selectedIndexPath = IndexPath(item: 0, section: 0)
         collectionView.selectItem(at: selectedIndexPath, animated: false, scrollPosition: .centeredHorizontally)
+        
+        setupHorizontalBar()
+    }
+    
+    let horizontalBarView = UIView()
+
+    func setupHorizontalBar() {
+        horizontalBarView.backgroundColor = UIColor(white: 0.95, alpha: 1)
+        addSubview(horizontalBarView)
+        
+        horizontalBarView.snp.remakeConstraints { make in
+            make.bottom.equalToSuperview()
+            make.leading.equalToSuperview()
+            make.width.equalToSuperview().dividedBy(4)
+            make.height.equalTo(4)
+        }
+
     }
 
     // MARK: CollectionView Methods
@@ -60,6 +78,21 @@ class MenuBar: UIView, UICollectionViewDataSource,UICollectionViewDelegate, UICo
         return 0
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // How much space should be left is calculated according to which box is selected.
+        let x = CGFloat(indexPath.item) * frame.width / 4
+        
+        horizontalBarView.snp.remakeConstraints { make in
+            make.leading.equalTo(x)
+            make.bottom.equalToSuperview()
+            make.width.equalToSuperview().dividedBy(4)
+            make.height.equalTo(4)
+        }
+        // will change layouts for given seconds
+        UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1,options: .curveEaseOut) {
+            self.layoutIfNeeded()
+        }
+    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
