@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 
 class ViewController: UIViewController {
+
     
     private let tableView: UITableView = {
         let tableView = UITableView()
@@ -93,7 +94,7 @@ class ViewController: UIViewController {
     
 
     
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    /*func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
 
        if(velocity.y>0) {
            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
@@ -124,7 +125,7 @@ class ViewController: UIViewController {
            }, completion: nil)
          }
       }
-
+*/
     
     //set the color of the status bar
     override var preferredStatusBarStyle: UIStatusBarStyle {
